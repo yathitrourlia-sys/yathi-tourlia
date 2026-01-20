@@ -12,7 +12,27 @@
             background: #f5f5f5;
             color: #333;
         }
+<!-- Fixed Google Translate Button -->
+<div id="google_translate_element" 
+     style="position:fixed; top:10px; right:10px; z-index:9999; border-radius:5px; overflow:hidden; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,0.3); padding:5px;">
+</div>
 
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement(
+    {
+      pageLanguage: 'en',           // Default page language = English
+      includedLanguages: 'de,fr,es,pl,en',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    },
+    'google_translate_element'
+  );
+}
+</script>
+
+<script type="text/javascript" 
+src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
         header {
             background: #0a6d4a;
             color: #fff;
