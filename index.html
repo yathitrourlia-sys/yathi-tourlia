@@ -139,7 +139,246 @@ src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit
         <li>Customized Tour Itineraries</li>
     </ul>
 </section>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yathi Tourlia Travel Desk - Full Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Your original CSS for desktop version */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f9ff;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a6bc4 0%, #0d4d8c 100%);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            margin-right: 15px;
+            color: #ffd166;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        
+        /* Mobile App Toggle Button */
+        .mobile-app-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(to right, #1a6bc4, #0d4d8c);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none; /* Hidden on desktop */
+        }
+        
+        .mobile-app-toggle i {
+            margin-right: 8px;
+            font-size: 1.2rem;
+        }
+        
+        /* Mobile App Overlay */
+        .mobile-app-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .mobile-app-container {
+            width: 100%;
+            height: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            background-color: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .close-mobile-app {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10000;
+            display: none;
+        }
+        
+        /* Media Query for Mobile */
+        @media (max-width: 768px) {
+            .mobile-app-toggle {
+                display: flex;
+            }
+            
+            .desktop-only {
+                display: none;
+            }
+        }
+        
+        /* Rest of your original CSS for gallery */
+        .gallery-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+        
+        /* ... Rest of your original CSS ... */
+    </style>
+</head>
+<body>
+    <!-- Your original header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-plane-departure"></i>
+                <h1>Yathi Tourlia Travel Desk</h1>
+            </div>
+            <p class="tagline">Explore the world's wonders with our curated travel experiences and destinations</p>
+        </div>
+    </header>
     
+    <!-- Your original content -->
+    <div class="container">
+        <div class="gallery-container">
+            <h2 class="section-title"><i class="fas fa-images"></i> Travel Photo Gallery</h2>
+            
+            <div class="gallery-controls">
+                <button class="add-photo-btn" id="add-photo">
+                    <i class="fas fa-plus-circle"></i> Add Photo
+                </button>
+                <div class="photo-counter">Photos: <span id="photo-count">0</span></div>
+            </div>
+            
+            <input type="file" id="file-input" accept="image/*">
+            
+            <div class="gallery" id="photo-gallery">
+                <!-- Photos will be loaded here -->
+            </div>
+            
+            <div class="instructions">
+                <h3><i class="fas fa-info-circle"></i> How to use the gallery</h3>
+                <p>1. Click the "Add Photo" button to upload images from your device</p>
+                <p>2. Supported formats: JPG, PNG, GIF</p>
+                <p>3. Hover over any photo and click the delete button (🗑️) to remove it</p>
+                <p>4. All photos are stored locally in your browser</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 Yathi Tourlia Travel Desk. All rights reserved.</p>
+            <p>Explore the world with us!</p>
+        </div>
+    </footer>
+    
+    <!-- Mobile App Toggle Button (Shows on mobile only) -->
+    <button class="mobile-app-toggle" id="mobile-app-toggle">
+        <i class="fas fa-mobile-alt"></i> Mobile App
+    </button>
+    
+    <!-- Mobile App Overlay -->
+    <div class="mobile-app-overlay" id="mobile-app-overlay">
+        <button class="close-mobile-app" id="close-mobile-app">&times;</button>
+        <div class="mobile-app-container">
+            <!-- Mobile App will be loaded here -->
+            <iframe id="mobile-app-frame" src="mobile-app.html" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Your original gallery JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            // Your existing gallery code here...
+            // (Copy the JavaScript from your original gallery)
+            
+            // Mobile App Toggle
+            const mobileAppToggle = document.getElementById('mobile-app-toggle');
+            const mobileAppOverlay = document.getElementById('mobile-app-overlay');
+            const closeMobileApp = document.getElementById('close-mobile-app');
+            
+            if (mobileAppToggle) {
+                mobileAppToggle.addEventListener('click', function() {
+                    mobileAppOverlay.style.display = 'flex';
+                    closeMobileApp.style.display = 'block';
+                });
+            }
+            
+            if (closeMobileApp) {
+                closeMobileApp.addEventListener('click', function() {
+                    mobileAppOverlay.style.display = 'none';
+                    this.style.display = 'none';
+                });
+            }
+            
+            // Close overlay when clicking outside
+            mobileAppOverlay.addEventListener('click', function(e) {
+                if (e.target === mobileAppOverlay) {
+                    mobileAppOverlay.style.display = 'none';
+                    closeMobileApp.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+        </html>  
 
 <section>
     <h2>Popular Tours</h2>
