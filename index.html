@@ -2,7 +2,627 @@
 <html lang="en">
     <style>
   /* Primary Colors */
-    
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yathi Tourlia - Photo Gallery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Styles for Gallery */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f9ff;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #1a6bc4;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: #0d4d8c;
+            margin: 30px 0 20px;
+            font-size: 1.8rem;
+        }
+        
+        .tagline {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        /* Gallery Controls */
+        .gallery-controls {
+            margin: 30px 0;
+        }
+        
+        .add-photo-btn {
+            background: linear-gradient(to right, #1a6bc4, #0d4d8c);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .add-photo-btn:hover {
+            background: linear-gradient(to right, #0d4d8c, #1a6bc4);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .photo-counter {
+            background: #e8f0fe;
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        /* Hidden file input */
+        #file-input {
+            display: none;
+        }
+        
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+            padding: 20px;
+            background: #f8faff;
+            border-radius: 10px;
+        }
+        
+        .photo-item {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: white;
+            position: relative;
+            transition: transform 0.3s;
+        }
+        
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .photo-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .photo-info {
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .photo-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .photo-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,0,0,0.9);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .delete-btn:hover {
+            background: red;
+            transform: scale(1.1);
+        }
+        
+        /* Empty Gallery */
+        .empty-gallery {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        
+        .empty-gallery i {
+            font-size: 4rem;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        
+        .empty-gallery p {
+            font-size: 1.2rem;
+        }
+        
+        /* Instructions */
+        .instructions {
+            background: linear-gradient(to right, #f0f7ff, #e3f2fd);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: left;
+            border-left: 5px solid #1a6bc4;
+        }
+        
+        .instructions h3 {
+            color: #1a6bc4;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .instructions ul {
+            list-style: none;
+            padding-left: 10px;
+        }
+        
+        .instructions li {
+            margin: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .instructions li:before {
+            content: "✓";
+            color: #1a6bc4;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .add-photo-btn {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+        
+        /* Upload Progress */
+        .upload-progress {
+            background: #e8f0fe;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 500px;
+            display: none;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #1a6bc4, #0d4d8c);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        /* Success Message */
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 500px;
+            display: none;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1><i class="fas fa-plane-departure"></i> Yathi Tourlia Travel Desk</h1>
+            <p class="tagline">Upload and share your travel memories</p>
+        </div>
+        
+        <h2><i class="fas fa-images"></i> Travel Photo Gallery</h2>
+        
+        <!-- Gallery Controls -->
+        <div class="gallery-controls">
+            <!-- This is the Add Photo Button -->
+            <button class="add-photo-btn" id="add-photo">
+                <i class="fas fa-plus-circle"></i> Add Photo
+            </button>
+            
+            <div class="photo-counter">
+                <i class="fas fa-camera"></i> Photos: <span id="photo-count">0</span>
+            </div>
+            
+            <!-- Hidden File Input -->
+            <input type="file" id="file-input" accept="image/*" multiple>
+        </div>
+        
+        <!-- Upload Progress -->
+        <div class="upload-progress" id="upload-progress">
+            <div>Uploading... <span id="progress-text">0%</span></div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+        
+        <!-- Success Message -->
+        <div class="success-message" id="success-message">
+            <i class="fas fa-check-circle"></i> Photo uploaded successfully!
+        </div>
+        
+        <!-- Gallery Grid -->
+        <div class="gallery-grid" id="gallery-grid">
+            <!-- Photos will appear here -->
+            <div class="empty-gallery" id="empty-gallery">
+                <i class="fas fa-camera"></i>
+                <h3>No photos yet</h3>
+                <p>Click the "Add Photo" button above to add your first travel photo</p>
+            </div>
+        </div>
+        
+        <!-- Instructions -->
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> How to Upload Photos</h3>
+            <ul>
+                <li>Click the blue "Add Photo" button above</li>
+                <li>Select photos from your computer or phone</li>
+                <li>Photos will automatically appear in the gallery</li>
+                <li>Click the red delete button (❌) to remove any photo</li>
+                <li>Photos are saved in your browser - they won't disappear when you close the page</li>
+                <li>Supported formats: JPG, PNG, GIF (max 10MB each)</li>
+            </ul>
+        </div>
+        
+        <!-- Footer -->
+        <footer>
+            <p>© 2023 Yathi Tourlia Travel Desk. All rights reserved.</p>
+            <p><i class="fas fa-globe"></i> Explore the world with us!</p>
+        </footer>
+    </div>
+
+    <!-- JavaScript Code - DO NOT DELETE THIS -->
+    <script>
+        // Get all elements
+        const addPhotoBtn = document.getElementById('add-photo');
+        const fileInput = document.getElementById('file-input');
+        const galleryGrid = document.getElementById('gallery-grid');
+        const photoCount = document.getElementById('photo-count');
+        const emptyGallery = document.getElementById('empty-gallery');
+        const uploadProgress = document.getElementById('upload-progress');
+        const progressText = document.getElementById('progress-text');
+        const progressFill = document.getElementById('progress-fill');
+        const successMessage = document.getElementById('success-message');
+        
+        // Array to store photos
+        let photos = [];
+        
+        // Load photos when page loads
+        window.addEventListener('load', function() {
+            loadPhotos();
+        });
+        
+        // Load photos from browser storage
+        function loadPhotos() {
+            const savedPhotos = localStorage.getItem('yathiTourliaPhotos');
+            if (savedPhotos) {
+                photos = JSON.parse(savedPhotos);
+                updateGallery();
+            }
+        }
+        
+        // Save photos to browser storage
+        function savePhotos() {
+            localStorage.setItem('yathiTourliaPhotos', JSON.stringify(photos));
+        }
+        
+        // Update the gallery display
+        function updateGallery() {
+            // Update photo count
+            photoCount.textContent = photos.length;
+            
+            // Clear gallery
+            galleryGrid.innerHTML = '';
+            
+            // If no photos, show empty message
+            if (photos.length === 0) {
+                galleryGrid.appendChild(emptyGallery);
+                emptyGallery.style.display = 'block';
+                return;
+            } else {
+                emptyGallery.style.display = 'none';
+            }
+            
+            // Add all photos to gallery
+            photos.forEach((photo, index) => {
+                const photoItem = document.createElement('div');
+                photoItem.className = 'photo-item';
+                photoItem.innerHTML = `
+                    <img src="${photo.url}" alt="${photo.name}" loading="lazy">
+                    <div class="photo-info">
+                        <div class="photo-name">${photo.name}</div>
+                        <div class="photo-date">Added: ${photo.date}</div>
+                        <div class="photo-date">Size: ${photo.size}</div>
+                    </div>
+                    <button class="delete-btn" onclick="deletePhoto(${index})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                galleryGrid.appendChild(photoItem);
+            });
+        }
+        
+        // Delete a photo
+        function deletePhoto(index) {
+            if (confirm('Are you sure you want to delete this photo?')) {
+                photos.splice(index, 1);
+                savePhotos();
+                updateGallery();
+                showMessage('Photo deleted successfully!', 'success');
+            }
+        }
+        
+        // Show message
+        function showMessage(text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = text;
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4CAF50' : '#f44336'};
+                color: white;
+                padding: 15px 25px;
+                border-radius: 5px;
+                z-index: 1000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
+            document.body.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 3000);
+        }
+        
+        // When Add Photo button is clicked
+        addPhotoBtn.addEventListener('click', function() {
+            fileInput.click();
+        });
+        
+        // When files are selected
+        fileInput.addEventListener('change', function(event) {
+            const files = event.target.files;
+            if (files.length > 0) {
+                // Show upload progress
+                uploadProgress.style.display = 'block';
+                progressFill.style.width = '0%';
+                progressText.textContent = '0%';
+                
+                // Process each file
+                let processed = 0;
+                Array.from(files).forEach((file, index) => {
+                    // Check if it's an image
+                    if (!file.type.match('image.*')) {
+                        alert(`"${file.name}" is not an image. Please select JPG, PNG, or GIF files.`);
+                        processed++;
+                        checkIfDone();
+                        return;
+                    }
+                    
+                    // Check file size (max 10MB)
+                    if (file.size > 10 * 1024 * 1024) {
+                        alert(`"${file.name}" is too large (${(file.size/1024/1024).toFixed(1)}MB). Maximum size is 10MB.`);
+                        processed++;
+                        checkIfDone();
+                        return;
+                    }
+                    
+                    // Read the file
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        // Create photo object
+                        const photo = {
+                            url: e.target.result, // The image data
+                            name: file.name,
+                            date: new Date().toLocaleDateString(),
+                            size: (file.size / 1024 / 1024).toFixed(2) + ' MB',
+                            type: file.type
+                        };
+                        
+                        // Add to photos array
+                        photos.push(photo);
+                        
+                        // Update progress
+                        processed++;
+                        const progress = Math.round((processed / files.length) * 100);
+                        progressFill.style.width = progress + '%';
+                        progressText.textContent = progress + '%';
+                        
+                        // If all files processed
+                        if (processed === files.length) {
+                            // Save and update
+                            savePhotos();
+                            updateGallery();
+                            
+                            // Hide progress, show success
+                            setTimeout(() => {
+                                uploadProgress.style.display = 'none';
+                                successMessage.style.display = 'block';
+                                showMessage(`✅ ${files.length} photo(s) uploaded successfully!`, 'success');
+                                
+                                // Hide success message after 3 seconds
+                                setTimeout(() => {
+                                    successMessage.style.display = 'none';
+                                }, 3000);
+                            }, 500);
+                        }
+                        
+                        checkIfDone();
+                    };
+                    
+                    reader.readAsDataURL(file);
+                });
+                
+                // Reset file input
+                fileInput.value = '';
+            }
+            
+            function checkIfDone() {
+                if (processed === files.length) {
+                    updateGallery();
+                }
+            }
+        });
+        
+        // Add drag and drop functionality
+        galleryGrid.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            galleryGrid.style.border = '2px dashed #1a6bc4';
+            galleryGrid.style.backgroundColor = '#f0f7ff';
+        });
+        
+        galleryGrid.addEventListener('dragleave', function() {
+            galleryGrid.style.border = 'none';
+            galleryGrid.style.backgroundColor = '#f8faff';
+        });
+        
+        galleryGrid.addEventListener('drop', function(e) {
+            e.preventDefault();
+            galleryGrid.style.border = 'none';
+            galleryGrid.style.backgroundColor = '#f8faff';
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                // Create a fake change event
+                const dataTransfer = new DataTransfer();
+                Array.from(files).forEach(file => dataTransfer.items.add(file));
+                fileInput.files = dataTransfer.files;
+                
+                // Trigger the change event
+                const event = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(event);
+            }
+        });
+        
+        // Add sample photos on first visit
+        function addSamplePhotos() {
+            if (photos.length === 0) {
+                const samplePhotos = [
+                    {
+                        url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop',
+                        name: 'Tropical Beach',
+                        date: new Date().toLocaleDateString(),
+                        size: '2.1 MB',
+                        type: 'image/jpeg'
+                    },
+                    {
+                        url: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&h=400&fit=crop',
+                        name: 'Mountain View',
+                        date: new Date().toLocaleDateString(),
+                        size: '1.8 MB',
+                        type: 'image/jpeg'
+                    },
+                    {
+                        url: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&h=400&fit=crop',
+                        name: 'Forest Lake',
+                        date: new Date().toLocaleDateString(),
+                        size: '2.3 MB',
+                        type: 'image/jpeg'
+                    }
+                ];
+                
+                photos = samplePhotos;
+                savePhotos();
+                updateGallery();
+            }
+        }
+        
+        // Uncomment the line below to add sample photos automatically
+        // addSamplePhotos();
+    </script>
+</body>
+</html>
     body {
     <head>
     <meta charset="UTF-8">
